@@ -13,24 +13,22 @@
     // print_r($row);
     if(empty($username) || empty($mail) || empty($pass1) || empty($pass2)){
         echo '<script> alert("กรอกข้อมูลไม่ครบ"); </script>';
-        // header("refresh:0.2; url=register.html");
-    }
-    if($pass1 != $pass2){
-        echo $pass1.'<br>'.$pass2;
+        header("refresh:0.2; url=resetpassw.php");
+    }elseif($pass1 != $pass2){
+        // echo $pass1.'<br>'.$pass2;
         echo '<script> alert("รหัสผ่านไม่ตรงกัน"); </script>';
-        // header("refresh:0.2; url=register.html");
-    }
-        if($row->email != $mail){
+        header("refresh:0.2; url=resetpassw.php");
+    }elseif($row->email != $mail){
             echo '<script> alert("อีเมล์ไม่ถูกต้องไม่สามารถแก้ไขรหัสผ่านได้"); </script>';
-        }
-        else{
+    }else{
             $sql = "UPDATE member SET password='$pass1' WHERE username = '$username'";
             if ($conn->query($sql) === TRUE) {
-                echo "Record updated successfully";
+                echo "<script> alert('แก้ไขรหัสผ่านสำเร็จ');</script>";
+                header("refresh:0.2; url=login.php");
             } else{
                 echo "Error updating record: " . $conn->error;
             }
-        }
+    }
         $conn->close();
     ?>
 
